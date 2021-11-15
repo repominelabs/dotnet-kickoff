@@ -1,4 +1,4 @@
-﻿namespace Repomine.Dotnet.Core.Application.DTOs.Identity;
+﻿namespace Repomine.Dotnet.Core.Application.DTOs.Identity.Auth;
 
 public class LoginRequest
 {

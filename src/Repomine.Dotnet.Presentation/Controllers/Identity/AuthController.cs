@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Repomine.Dotnet.Core.Application.DTOs.Identity;
+using Repomine.Dotnet.Core.Application.DTOs.Identity.Auth;
 using Repomine.Dotnet.Core.Application.Interfaces.Identity;
 using Repomine.Dotnet.Core.Domain.Wrappers;
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Repomine.Dotnet.Core.Application.DTOs.Identity;
+namespace Repomine.Dotnet.Core.Application.DTOs.Identity.Auth;
 
 public class RegisterRequest
 {

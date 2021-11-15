@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Application\DTOs\Identity\Role\" />
     <Folder Include="Application\Features\" />
     <Folder Include="Application\Services\" />
   </ItemGroup>

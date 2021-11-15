@@ -1,4 +1,4 @@
-﻿using Repomine.Dotnet.Core.Application.DTOs.Identity;
+﻿using Repomine.Dotnet.Core.Application.DTOs.Identity.Auth;
 using Repomine.Dotnet.Core.Domain.Wrappers;
 
 namespace Repomine.Dotnet.Core.Application.Interfaces.Identity;

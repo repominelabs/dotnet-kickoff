@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Repomine.Dotnet.Core.Application.DTOs.Identity;
+namespace Repomine.Dotnet.Core.Application.DTOs.Identity.Auth;
 
 public class LoginResponse
 {
