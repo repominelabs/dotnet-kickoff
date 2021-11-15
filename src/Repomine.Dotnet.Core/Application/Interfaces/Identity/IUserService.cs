@@ -5,11 +5,11 @@ namespace Repomine.Dotnet.Core.Application.Interfaces.Identity;
 
 public interface IUserService
 {
-    Task<Response<SearchUsersResponse>> SearchUsers(SearchUsersRequest request);
-    Task<Response<SaveUserResponse>> SaveUser(SaveUserRequest request);
-    Task<Response<SaveMultipleUserResponse>> SaveMultipleUser(SaveMultipleUserRequest request);
-    Task<Response<DeleteUserResponse>> DeleteUser(DeleteUserRequest request);
-    Task<Response<UpdateUserResponse>> UpdateUser(UpdateUserRequest request);
-    Task<Response<AddUserRoleResponse>> AddUserRole(AddUserRoleRequest request);
-    Task<Response<DeleteUserRoleResponse>> DeleteUserRole(DeleteUserRoleRequest request);
+    Task<Response<SearchUsersResponse>> SearchUsersAsync(SearchUsersRequest request);
+    Task<Response<SaveUserResponse>> SaveUserAsync(SaveUserRequest request);
+    Task<Response<SaveMultipleUserResponse>> SaveMultipleUserAsync(SaveMultipleUserRequest request);
+    Task<Response<DeleteUserResponse>> DeleteUserAsync(DeleteUserRequest request);
+    Task<Response<UpdateUserResponse>> UpdateUserAsync(UpdateUserRequest request);
+    Task<Response<AddUserRoleResponse>> AddUserRoleAsync(AddUserRoleRequest request);
+    Task<Response<DeleteUserRoleResponse>> DeleteUserRoleAsync(DeleteUserRoleRequest request);
 }

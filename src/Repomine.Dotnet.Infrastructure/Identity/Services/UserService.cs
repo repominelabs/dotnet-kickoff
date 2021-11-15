@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Repomine.Dotnet.Core.Application.DTOs.Identity.User;
 using Repomine.Dotnet.Core.Application.Interfaces.Identity;
 using Repomine.Dotnet.Core.Domain.Wrappers;
@@ -11,46 +11,59 @@ public class UserService : IUserService
 {
     private readonly UserManager<User> _userManager;
     private readonly RoleManager<Role> _roleManager;
+    private readonly IMapper _mapper;
 
-    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager)
+    public UserService(UserManager<User> userManager, RoleManager<Role> roleManager, IMapper mapper)
     {
         _userManager = userManager;
         _roleManager = roleManager;
+        _mapper = mapper;
     }
 
-    public Task<Response<AddUserRoleResponse>> AddUserRole(AddUserRoleRequest request)
+    public Task<Response<AddUserRoleResponse>> AddUserRoleAsync(AddUserRoleRequest request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Response<DeleteUserResponse>> DeleteUser(DeleteUserRequest request)
+    public Task<Response<DeleteUserResponse>> DeleteUserAsync(DeleteUserRequest request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Response<DeleteUserRoleResponse>> DeleteUserRole(DeleteUserRoleRequest request)
+    public Task<Response<DeleteUserRoleResponse>> DeleteUserRoleAsync(DeleteUserRoleRequest request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Response<SaveMultipleUserResponse>> SaveMultipleUser(SaveMultipleUserRequest request)
+    public Task<Response<SaveMultipleUserResponse>> SaveMultipleUserAsync(SaveMultipleUserRequest request)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Response<SaveUserResponse>> SaveUser(SaveUserRequest request)
+    public async Task<Response<SaveUserResponse>> SaveUserAsync(SaveUserRequest request)
     {
-        throw new NotImplementedException();
+        Response<SaveUserResponse> response = new();
+        User user = _mapper.Map<User>(request);
+
+        await _userManager.CreateAsync(user);
+
+        return response;
     }
 
-    public Task<Response<SearchUsersResponse>> SearchUsers(SearchUsersRequest request)
+    public async Task<Response<SearchUsersResponse>> SearchUsersAsync(SearchUsersRequest request)
     {
-        // await _userManager.Users.ToListAsync();
-        throw new NotImplementedException();
+        Response<SearchUsersResponse> response = new();
+        // Todo : Get Users By PaginatedListAsync
+        return response;
     }
 
-    public Task<Response<UpdateUserResponse>> UpdateUser(UpdateUserRequest request)
+    public async Task<Response<UpdateUserResponse>> UpdateUserAsync(UpdateUserRequest request)
     {
-        throw new NotImplementedException();
+        Response<UpdateUserResponse> response = new();
+        User user = _mapper.Map<User>(request);
+
+        await _userManager.UpdateAsync(user);
+
+        return response;
     }
 }
