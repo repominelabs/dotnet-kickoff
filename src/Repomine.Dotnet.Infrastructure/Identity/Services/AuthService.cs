@@ -15,6 +15,7 @@ using Repomine.Dotnet.Infrastructure.Identity.Helpers;
 
 namespace Repomine.Dotnet.Infrastructure.Identity.Services;
 
+/// <summary>Class <c>AuthService</c> includes authentication services</summary>
 public class AuthService : IAuthService
 {
     private readonly UserManager<User> _userManager;
@@ -23,6 +24,14 @@ public class AuthService : IAuthService
     private readonly IEmailService _emailService;
     private readonly JwtSettings _jwtSettings;
 
+    /// <summary>This constructor initializes the new AuthService to
+    ///    (<paramref name="userManager"/>,<paramref name="roleManager"/>,<paramref name="signInManager"/>,<paramref name="emailService"/>,<paramref name="jwtSettings"/>).
+    /// </summary>
+    /// <param name="userManager">the new AuthService's x-coordinate.</param>
+    /// <param name="roleManager">the new AuthService's y-coordinate.</param>
+    /// <param name="signInManager">the new AuthService's y-coordinate.</param>
+    /// <param name="emailService">the new AuthService's y-coordinate.</param>
+    /// <param name="jwtSettings">the new AuthService's y-coordinate.</param>
     public AuthService(UserManager<User> userManager, RoleManager<Role> roleManager, SignInManager<User> signInManager, IEmailService emailService, IOptions<JwtSettings> jwtSettings)
     {
         _userManager = userManager;
@@ -32,6 +41,10 @@ public class AuthService : IAuthService
         _jwtSettings = jwtSettings.Value;
     }
 
+    /// <summary>This method implements the login process of the users to the system.</summary>
+    /// <param name="request">The model consists of username and password.</param>
+    /// <returns>A LoginResponse contains user information and tokens.</returns>
+    /// <exception cref="ApiException"></exception>
     public async Task<Response<LoginResponse>> LoginAsync(LoginRequest request)
     {
         var user = await _userManager.FindByEmailAsync(request.Email);
@@ -68,16 +81,27 @@ public class AuthService : IAuthService
         return new Response<LoginResponse>(response, $"Authenticated {user.UserName}");
     }
 
+    /// <summary>This method implements user logout from the system.</summary>
+    /// <returns>Operation successful or not.</returns>
     public Task<Response<bool>> LogoutAsync()
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>This method provides refresh token control.</summary>
+    /// <param name="request">The model consists of access token and refresh token.</param>
+    /// <returns>A RefreshTokenResponse contains user information and tokens.</returns>
+    /// <exception cref="ApiException"></exception>
     public Task<Response<RefreshTokenResponse>> RefreshTokenAsync(RefreshTokenRequest request)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>This method performs user registration with the parameters passed.</summary>
+    /// <param name="request">The model consists of user details.</param>
+    /// <param name="origin">It is the working base url of the system.</param>
+    /// <returns>A RegisterResponse contains user information and tokens.</returns>
+    /// <exception cref="ApiException"></exception>
     public async Task<Response<RegisterResponse>> RegisterAsync(RegisterRequest request, string origin)
     {
         RegisterResponse response = new();
@@ -104,7 +128,6 @@ public class AuthService : IAuthService
             {
                 await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
                 var confirmUrl = await AuthHelper.GetConfirmUrl(user, origin, _userManager);
-                //TODO: Attach Email Service here and configure it via appsettings
                 await _emailService.SendEmailAsync(new SendEmailAsyncRequest() { From = "repomine@outlook.com", To = user.Email, Body = $"Please confirm your account by visiting this URL {confirmUrl}", Subject = "Confirm Registration" });
                 return new Response<RegisterResponse>(response, message: $"User Registered. Please confirm your account by visiting this URL {confirmUrl}");
             }
@@ -119,6 +142,9 @@ public class AuthService : IAuthService
         }
     }
 
+    /// <summary>This method is a business that allows the registered user to confirm the mail.</summary>
+    /// <returns>The info text is returned as the result content.</returns>
+    /// <exception cref="ApiException"></exception>
     public async Task<Response<string>> ConfirmEmailAsync(string userId, string code)
     {
         var user = await _userManager.FindByIdAsync(userId);
