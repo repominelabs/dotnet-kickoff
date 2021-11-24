@@ -10,6 +10,7 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Repomine.Dotnet.Core.Application.Interfaces.Identity;
 using Repomine.Dotnet.Core.Application.Interfaces.Shared;
 using Repomine.Dotnet.Core.Domain.Wrappers;
+using Repomine.Dotnet.Infrastructure.Identity.Mappings;
 using Repomine.Dotnet.Infrastructure.Identity.Models;
 using Repomine.Dotnet.Infrastructure.Identity.Services;
 using Repomine.Dotnet.Infrastructure.Persistence.Contexts;
@@ -26,6 +27,7 @@ public static class ServiceRegistration
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IRoleService, RoleService>();
+        services.AddAutoMapper(typeof(GeneralProfile));
 
         string connString = configuration.GetConnectionString("IdentityConnection");
         services.AddDbContextPool<Identity.Contexts.IdentityDbContext>(options => options.UseMySql(connString, ServerVersion.AutoDetect(connString), b => b.SchemaBehavior(MySqlSchemaBehavior.Ignore)));

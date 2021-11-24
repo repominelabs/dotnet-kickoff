@@ -20,32 +20,57 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public Task<Response<AddUserRoleResponse>> AddUserRoleAsync(AddUserRoleRequest request)
+    public async Task<Response<string>> AddUserRoleAsync(AddUserRoleRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _userManager.AddToRoleAsync(_mapper.Map<User>(request), request.Role);
+        Response<string> response = new()
+        {
+            Succeeded = result.Succeeded,
+        };
+
+        return response;
     }
 
-    public Task<Response<DeleteUserResponse>> DeleteUserAsync(DeleteUserRequest request)
+    public async Task<Response<string>> DeleteUserAsync(DeleteUserRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _userManager.DeleteAsync(_mapper.Map<User>(request));
+        Response<string> response = new()
+        {
+            Succeeded = result.Succeeded,
+        };
+
+        return response;
     }
 
-    public Task<Response<DeleteUserRoleResponse>> DeleteUserRoleAsync(DeleteUserRoleRequest request)
+    public async Task<Response<string>> DeleteUserRoleAsync(DeleteUserRoleRequest request)
     {
-        throw new NotImplementedException();
+        var result = await _userManager.RemoveFromRoleAsync(_mapper.Map<User>(request), request.Role);
+        Response<string> response = new()
+        {
+            Succeeded = result.Succeeded,
+        };
+
+        return response;
     }
 
-    public Task<Response<SaveMultipleUserResponse>> SaveMultipleUserAsync(SaveMultipleUserRequest request)
+    public async Task<Response<string>> SaveMultipleUserAsync(SaveMultipleUserRequest request)
     {
-        throw new NotImplementedException();
+        foreach(var user in request.Users)
+        {
+            await _userManager.CreateAsync(_mapper.Map<User>(user));
+        }
+        Response<string> response = new();
+
+        return response;
     }
 
-    public async Task<Response<SaveUserResponse>> SaveUserAsync(SaveUserRequest request)
+    public async Task<Response<string>> SaveUserAsync(SaveUserRequest request)
     {
-        Response<SaveUserResponse> response = new();
-        User user = _mapper.Map<User>(request);
-
-        await _userManager.CreateAsync(user);
+        var result = await _userManager.CreateAsync(_mapper.Map<User>(request));
+        Response<string> response = new()
+        {
+            Succeeded = result.Succeeded,
+        };
 
         return response;
     }
@@ -57,13 +82,14 @@ public class UserService : IUserService
         return response;
     }
 
-    public async Task<Response<UpdateUserResponse>> UpdateUserAsync(UpdateUserRequest request)
+    public async Task<Response<string>> UpdateUserAsync(UpdateUserRequest request)
     {
-        Response<UpdateUserResponse> response = new();
-        User user = _mapper.Map<User>(request);
-
-        await _userManager.UpdateAsync(user);
-
+        var result = await _userManager.UpdateAsync(_mapper.Map<User>(request));
+        Response<string> response = new()
+        {
+            Succeeded = result.Succeeded,
+        };
+        
         return response;
     }
 }

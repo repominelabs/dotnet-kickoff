@@ -2,4 +2,5 @@
 
 public class SaveMultipleUserRequest
 {
+    public List<SaveUserRequest> Users { get; set; }
 }
